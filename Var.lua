@@ -1,5 +1,5 @@
-local queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer.Character:FindFirstChild('FULLY_LOADED_CHAR')
+local queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 local function httpRequest(data)
     if syn and syn.request then
         return syn.request(data)
