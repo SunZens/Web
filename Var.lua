@@ -1,4 +1,3 @@
-repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer.Character:FindFirstChild('FULLY_LOADED_CHAR')
 queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 local function LoadSettings()
     if readfile and writefile and isfile and isfolder then
@@ -19,7 +18,14 @@ _G.SaveSetting = {
     ["Auto Execute"] = KeepValiable or true,
 }
 KeepValiable = _G.SaveSetting["Auto Execute"]
-
+local TeleportCheck = false
+Players.LocalPlayer.OnTeleport:Connect(function(State)
+	if KeepValiable and (not TeleportCheck) and queueteleport then
+		TeleportCheck = true
+		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/SunZens/Web/refs/heads/main/Var.lua'))()")
+	end
+end)
+repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer.Character:FindFirstChild('FULLY_LOADED_CHAR')
 local function httpRequest(data)
     if syn and syn.request then
         return syn.request(data)
@@ -159,11 +165,3 @@ while wait() do
         end
     end
 end
-
-local TeleportCheck = false
-Players.LocalPlayer.OnTeleport:Connect(function(State)
-	if KeepValiable and (not TeleportCheck) and queueteleport then
-		TeleportCheck = true
-		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/SunZens/Web/refs/heads/main/Var.lua'))()")
-	end
-end)
