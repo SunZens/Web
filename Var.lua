@@ -1,32 +1,5 @@
-queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
-local function LoadSettings()
-    if readfile and writefile and isfile and isfolder then
-        if isfile("Valiable_Auto_Execute.json") then
-            local settings = game:GetService("HttpService"):JSONDecode(readfile("Valiable_Auto_Execute.json"))
-            for key, value in pairs(settings) do
-                _G[key] = value
-            end
-        else
-            writefile("Valiable_Auto_Execute.json", game:GetService("HttpService"):JSONEncode(_G))
-        end
-    else
-        warn("❌ File operations are not supported in this environment.")
-    end
-end
-LoadSettings()
-_G.SaveSetting = {
-    ["Auto Execute"] = KeepValiable or true,
-}
-KeepValiable = _G.SaveSetting["Auto Execute"]
-local TeleportCheck = false
-Players.LocalPlayer.OnTeleport:Connect(function(State)
-	if KeepValiable and (not TeleportCheck) and queueteleport then
-		TeleportCheck = true
-		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/SunZens/Web/refs/heads/main/Var.lua'))()")
-	end
-end)
+local queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer.Character:FindFirstChild('FULLY_LOADED_CHAR')
-queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 local function httpRequest(data)
     if syn and syn.request then
         return syn.request(data)
@@ -99,7 +72,36 @@ while wait() do
                 }loadstring(game:HttpGet("https://xk5ng.github.io/V4.8"))()
             end
         else
-            print(231132)
+            local response = httpRequest({
+                Url = "http://127.0.0.1:5000/valiable-system",
+                Method = "POST",
+                Headers = {["Content-Type"] = "application/json"},
+                Body = game:GetService("HttpService"):JSONEncode({
+                    name = game.Players.LocalPlayer.Name,
+                })
+            })
+            if response then
+                local body = response.Body or response.Data or response.Content or ""
+                if body and body ~= "" then
+                    local jsonData = game:GetService("HttpService"):JSONDecode(body)
+                    if jsonData.job_id_customer and jsonData.job_id_customer ~= "" then
+                        if game.JobId ~= jsonData.job_id_customer then
+                            if queueteleport then
+                                queueteleport([[
+                                    loadstring(game:HttpGet("https://raw.githubusercontent.com/SunZens/Web/refs/heads/main/Var.lua"))()
+                                ]])
+                            end
+                            repeat wait()
+                                game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, jsonData.job_id_customer, game.Players.LocalPlayer)
+                            until game.JobId == jsonData.job_id_customer
+                        end
+                    end
+                else
+                    game.Players.LocalPlayer:Kick("[System]: Unauthorized. No valid response from server")
+                end
+            else
+                game.Players.LocalPlayer:Kick("[System]: Executor not supported or request failed")
+            end
         end
     else
         repeat wait()
@@ -117,6 +119,11 @@ while wait() do
                     local jsonData = game:GetService("HttpService"):JSONDecode(body)
                     if jsonData.job_id_customer and jsonData.job_id_customer ~= "" then
                         if game.JobId ~= jsonData.job_id_customer then
+                            if queueteleport then
+                                queueteleport([[
+                                    loadstring(game:HttpGet("https://raw.githubusercontent.com/SunZens/Web/refs/heads/main/Var.lua"))()
+                                ]])
+                            end
                             repeat wait()
                                 game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, jsonData.job_id_customer, game.Players.LocalPlayer)
                             until game.JobId == jsonData.job_id_customer
@@ -143,6 +150,11 @@ while wait() do
                 local jsonData = game:GetService("HttpService"):JSONDecode(body)
                 if jsonData.job_id_customer and jsonData.job_id_customer ~= "" then
                     if game.JobId ~= jsonData.job_id_customer then
+                        if queueteleport then
+                            queueteleport([[
+                                loadstring(game:HttpGet("https://raw.githubusercontent.com/SunZens/Web/refs/heads/main/Var.lua"))()
+                            ]])
+                        end
                         repeat wait()
                             game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, jsonData.job_id_customer, game.Players.LocalPlayer)
                         until game.JobId == jsonData.job_id_customer
