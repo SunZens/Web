@@ -1,5 +1,5 @@
-local queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer.Character:FindFirstChild('FULLY_LOADED_CHAR')
+local queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 local function httpRequest(data)
     if syn and syn.request then
         return syn.request(data)
@@ -92,15 +92,18 @@ while wait() do
                                 ]])
                             end
                             repeat wait()
+                                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100000,0)
                                 game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, jsonData.job_id_customer, game.Players.LocalPlayer)
                             until game.JobId == jsonData.job_id_customer
                         end
+                    else
+                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100000,0)
                     end
                 else
-                    game.Players.LocalPlayer:Kick("[System]: Unauthorized. No valid response from server")
+                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100000,0)
                 end
             else
-                game.Players.LocalPlayer:Kick("[System]: Executor not supported or request failed")
+                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100000,0)
             end
         end
     else
@@ -125,15 +128,18 @@ while wait() do
                                 ]])
                             end
                             repeat wait()
+                                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100000,0)
                                 game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, jsonData.job_id_customer, game.Players.LocalPlayer)
                             until game.JobId == jsonData.job_id_customer
                         end
+                    else
+                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100000,0)
                     end
                 else
-                    game.Players.LocalPlayer:Kick("[System]: Unauthorized. No valid response from server")
+                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100000,0)
                 end
             else
-                game.Players.LocalPlayer:Kick("[System]: Executor not supported or request failed")
+                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100000,0)
             end
         until getgenv().Owner
         local response = httpRequest({
@@ -156,15 +162,18 @@ while wait() do
                             ]])
                         end
                         repeat wait()
-                            game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, jsonData.job_id_customer, game.Players.LocalPlayer)
+                            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100000,0)
+                            game:GetService("TeleportService"):TeleportToPlaceInstance(2788229376, jsonData.job_id_customer, game.Players.LocalPlayer)
                         until game.JobId == jsonData.job_id_customer
                     end
+                else
+                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100000,0)
                 end
             else
-                game.Players.LocalPlayer:Kick("[System]: Unauthorized. No valid response from server")
+                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100000,0)
             end
         else
-            game.Players.LocalPlayer:Kick("[System]: Executor not supported or request failed")
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100000,0)
         end
     end
 end
