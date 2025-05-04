@@ -26,6 +26,7 @@ Players.LocalPlayer.OnTeleport:Connect(function(State)
 	end
 end)
 repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer.Character:FindFirstChild('FULLY_LOADED_CHAR')
+queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 local function httpRequest(data)
     if syn and syn.request then
         return syn.request(data)
@@ -116,11 +117,6 @@ while wait() do
                     local jsonData = game:GetService("HttpService"):JSONDecode(body)
                     if jsonData.job_id_customer and jsonData.job_id_customer ~= "" then
                         if game.JobId ~= jsonData.job_id_customer then
-                            if queue_on_teleport then
-                                queue_on_teleport([[
-                                    loadstring(game:HttpGet("https://xk5ng.github.io/V4.8"))()
-                                ]])
-                            end
                             repeat wait()
                                 game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, jsonData.job_id_customer, game.Players.LocalPlayer)
                             until game.JobId == jsonData.job_id_customer
@@ -147,11 +143,6 @@ while wait() do
                 local jsonData = game:GetService("HttpService"):JSONDecode(body)
                 if jsonData.job_id_customer and jsonData.job_id_customer ~= "" then
                     if game.JobId ~= jsonData.job_id_customer then
-                        if queue_on_teleport then
-                            queue_on_teleport([[
-                                loadstring(game:HttpGet("https://xk5ng.github.io/V4.8"))()
-                            ]])
-                        end
                         repeat wait()
                             game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, jsonData.job_id_customer, game.Players.LocalPlayer)
                         until game.JobId == jsonData.job_id_customer
